@@ -1,9 +1,8 @@
 #include "s21_matrix_oop.hpp"
 
 S21Matrix::S21Matrix() {
-    this->cols_(0);
-    this->cols_(0);
-    this->matrix_(nullptr);
+    this->cols_(5);
+    this->rows_(5);
     CreateMatrix_();
 }
 
