@@ -9,6 +9,11 @@ public:
     S21Matrix(S21Matrix&& other) noexcept;
     ~S21Matrix();
 
+    int GetRows() const;
+    int GetCols() const;
+    void SetRows(const int rows);
+    void SetCols(const int cols);
+
 private:
     int rows_, cols_;
     double** matrix_;

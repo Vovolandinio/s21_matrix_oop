@@ -13,6 +13,18 @@ S21Matrix::S21Matrix(int rows, int cols) {
     CreateMatrix_();
 }
 
+S21Matrix::S21Matrix(const S21Matrix& other) {
+    this->cols_ = other.cols_;
+    this->rows_ = other.rows_;
+    CreateMatrix_();
+    for (int i = 0; i < this->rows_; i++) {
+        for (int j = 0; j < this->cols_; j++) {
+            this->matrix_[i][j] = other.matrix_[i][j];
+        }
+    }
+}
+
+
 void S21Matrix::CreateMatrix_() {
     if (rows_ <= 0 || cols_ <= 0) {
         throw std::invalid_argument(
