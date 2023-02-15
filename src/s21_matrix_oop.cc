@@ -24,6 +24,12 @@ S21Matrix::S21Matrix(const S21Matrix& other) {
     }
 }
 
+S21Matrix::S21Matrix(S21Matrix && other)
+noexcept {
+    std::swap(matrix_,other.matrix_);
+    std::swap(rows_,other.rows_);
+    std::swap(cols_,other.cols_);
+}
 
 void S21Matrix::CreateMatrix_() {
     if (rows_ <= 0 || cols_ <= 0) {

@@ -1,5 +1,7 @@
 #ifndef S21_MATRIX_OOP_S21_MATRIX_OOP_H
 #define S21_MATRIX_OOP_S21_MATRIX_OOP_H
+#include <iostream>
+
 
 Class S21Matrix {
 public:
