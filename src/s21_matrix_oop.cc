@@ -31,6 +31,10 @@ noexcept {
     std::swap(cols_,other.cols_);
 }
 
+S21Matrix::~S21Matrix() {
+    RemoveMatrix_()
+}
+
 void S21Matrix::CreateMatrix_() {
     if (rows_ <= 0 || cols_ <= 0) {
         throw std::invalid_argument(
@@ -45,4 +49,11 @@ void S21Matrix::CreateMatrix_() {
             matrix_[i][j] = 0;
         }
     }
+}
+
+void S21Matrix::RemoveMatrix_() {
+    delete[] matrix_;
+    rows_ = 0;
+    cols_ = 0;
+    matrix_ = nullptr;
 }

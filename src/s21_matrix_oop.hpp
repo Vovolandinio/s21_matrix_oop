@@ -20,6 +20,7 @@ private:
     int rows_, cols_;
     double** matrix_;
     void CreateMatrix_();
+    void RemoveMatrix_();
 };
 
 #endif //S21_MATRIX_OOP_S21_MATRIX_OOP_H
