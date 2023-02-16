@@ -100,7 +100,7 @@ S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
 }
 
 double &S21Matrix::operator()(int row, int col) {
-  if (row >= this->rows_ || col >= this->cols_) {
+  if (row >= this->rows_ || col >= this->cols_ || row <= 0 || col <= 0) {
     throw std::invalid_argument("index is outside the matrix ERROR!");
   }
   return this->matrix_[row][col];
