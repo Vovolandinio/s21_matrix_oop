@@ -2,7 +2,7 @@
 #define S21_MATRIX_OOP_S21_MATRIX_OOP_H
 #include <iostream>
 
-Class S21Matrix {
+class S21Matrix {
  public:
   S21Matrix();
   S21Matrix(int rows, int cols);
@@ -12,8 +12,11 @@ Class S21Matrix {
 
   int GetRows() const;
   int GetCols() const;
-  void SetRows(const int rows);
-  void SetCols(const int cols);
+  void SetRows(const int &rows);
+  void SetCols(const int &cols);
+  double **GetMatrix();
+
+  S21Matrix& operator=(const S21Matrix& other);
 
  private:
   int rows_, cols_;

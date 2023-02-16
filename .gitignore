@@ -31,3 +31,7 @@
 *.exe
 *.out
 *.app
+
+# Files
+main.cpp
+CMakeLists.txt
