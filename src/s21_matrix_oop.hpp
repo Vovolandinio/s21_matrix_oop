@@ -17,7 +17,7 @@ class S21Matrix {
   double **GetMatrix();
 
   S21Matrix &operator=(const S21Matrix &other);
-  double &operator()(const int row, const int col);
+  double &operator()(int row, int col);
 
  private:
   int rows_, cols_;
