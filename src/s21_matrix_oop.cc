@@ -60,6 +60,26 @@ void S21Matrix::SetCols(const int &cols) {
   *this = newMatrix;
 }
 
+
+void S21Matrix::SetRows(const int &rows) {
+    if (rows <= 0) {
+        throw std::invalid_argument(
+                "the values cannot be less than or equal to zero. ERROR!");
+    }
+    S21Matrix newMatrix(rows, cols_);
+    for (int i = 0; i < rows_; i++) {
+        for (int j = 0; j < cols_; j++) {
+            if (j > rows_ - 1) {
+                newMatrix.GetMatrix()[i][j] = 0;
+            } else {
+                newMatrix.GetMatrix()[i][j] = this->matrix_[i][j];
+            }
+        }
+    }
+    this->RemoveMatrix_();
+    *this = newMatrix;
+}
+
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {
     throw std::invalid_argument(
