@@ -98,3 +98,10 @@ S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
   }
   return *this;
 }
+
+double &S21Matrix::operator()(const int row, const int col) {
+  if (row >= this->rows_ || col >= this->cols_) {
+    throw std::invalid_argument("index is outside the matrix ERROR!");
+  }
+  return this->matrix_[row][col];
+}
