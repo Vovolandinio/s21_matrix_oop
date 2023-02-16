@@ -28,6 +28,9 @@ S21Matrix::S21Matrix(S21Matrix &&other) noexcept {
   std::swap(matrix_, other.matrix_);
   std::swap(rows_, other.rows_);
   std::swap(cols_, other.cols_);
+  matrix_ = nullptr;
+  rows_ = 0;
+  cols_ = 0;
 }
 
 S21Matrix::~S21Matrix() { RemoveMatrix_(); }
@@ -39,22 +42,22 @@ int S21Matrix::GetRows() const { return rows_; }
 double **S21Matrix::GetMatrix() { return matrix_; }
 
 void S21Matrix::SetCols(const int &cols) {
-    if (cols <= 0) {
-        throw std::invalid_argument(
-                "the values cannot be less than or equal to zero. ERROR!");
+  if (cols <= 0) {
+    throw std::invalid_argument(
+        "the values cannot be less than or equal to zero. ERROR!");
+  }
+  S21Matrix newMatrix(rows_, cols);
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < cols_; j++) {
+      if (j > cols_ - 1) {
+        newMatrix.GetMatrix()[i][j] = 0;
+      } else {
+        newMatrix.GetMatrix()[i][j] = this->matrix_[i][j];
+      }
     }
-    S21Matrix newMatrix(rows_, cols);
-    for (int i = 0; i < rows_; i++) {
-        for (int j = 0; j < cols_; j++) {
-            if (j > cols_ - 1) {
-                newMatrix.GetMatrix()[i][j] = 0;
-            } else {
-                newMatrix.GetMatrix()[i][j] = this->matrix_[i][j];
-            }
-        }
-    }
-    this->RemoveMatrix_();
-    *this = newMatrix;
+  }
+  this->RemoveMatrix_();
+  *this = newMatrix;
 }
 
 void S21Matrix::CreateMatrix_() {
@@ -80,18 +83,18 @@ void S21Matrix::RemoveMatrix_() {
   matrix_ = nullptr;
 }
 
-
-
-S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
-        rows_ = other.rows_;
-        cols_ = other.cols_;
-        CreateMatrix_();
-        if (matrix_ != nullptr) {
-            for (int i = 0; i < rows_; i++) {
-                for (int j = 0; j < cols_; j++) {
-                    this->matrix_[i][j] = other.matrix_[i][j];
-                }
-            }
+S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
+  rows_ = other.rows_;
+  cols_ = other.cols_;
+  CreateMatrix_();
+  if (matrix_ != nullptr) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < cols_; j++) {
+        if (matrix_[i] != nullptr) {
+          this->matrix_[i][j] = other.matrix_[i][j];
         }
-    return *this;
+      }
+    }
+  }
+  return *this;
 }

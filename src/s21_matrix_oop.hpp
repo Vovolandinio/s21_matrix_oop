@@ -7,7 +7,7 @@ class S21Matrix {
   S21Matrix();
   S21Matrix(int rows, int cols);
   S21Matrix(const S21Matrix &other);
-  S21Matrix(S21Matrix && other) noexcept;
+  S21Matrix(S21Matrix &&other) noexcept;
   ~S21Matrix();
 
   int GetRows() const;
@@ -16,7 +16,7 @@ class S21Matrix {
   void SetCols(const int &cols);
   double **GetMatrix();
 
-  S21Matrix& operator=(const S21Matrix& other);
+  S21Matrix &operator=(const S21Matrix &other);
 
  private:
   int rows_, cols_;
