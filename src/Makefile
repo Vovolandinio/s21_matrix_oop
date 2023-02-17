@@ -9,17 +9,17 @@ D_ENV=__MAC_OS__
 endif
 
 ### C++
-CC=g++
+CC=gcc
 STAT_LIBC_BUILD=ar rcs
 
 ### s21_matrix_oop.a
-STAT_LIBC_NAME=s21_matrix.a
+STAT_LIBC_NAME=s21_matrix_oop.a
 CFLAGS=-Wall -Wextra -Werror -g -D$(D_ENV)
-CLIBS_TEST=
 HEADERS=s21_matrix_oop.hpp
 SOURCES=s21_matrix_oop.cc
 
-OBJECTS=$(SOURCES:.c=.o)
+#DIRECTORY
+OBJ_DIR=./objects
 
 ## tests
 SOURCES_TEST=test_matrix_oop.cc
@@ -54,26 +54,18 @@ endif
 
 .PHONY: all clean gcov_report test html_rebuild check_rebuild
 
-all: clean s21_matrix.a
+all: clean s21_matrix_oop.a
 
 html_rebuild: clean gcov_report
 test_rebuild: clean test
-
-checking:
-	-cppcheck $(SOURCES) $(HEADERS)
-	-cp ../materials/linters/CPPLINT.cfg .
-	-python3 ../materials/linters/cpplint.py --extensions=c $(SOURCES)
-	-python3 ../materials/linters/cpplint.py --extensions=c $(HEADERS)
-
-checking_leaks:
-	-$(LEAKS_CHECKING)
 
 ### build
 $(SOURCES_TEST): $(TESTS_CHECK)
 	checkmk $(TESTS_CHECK) > $(SOURCES_TEST)
 
-%.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+%.o: %.cc $(HEADERS)
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(FLAGS) -c $< -o $(addprefix $(OBJ_DIR)/, $@)
 
 ### build s21_matrix.a
 $(STAT_LIBC_NAME): $(OBJECTS)
