@@ -140,3 +140,5 @@ double &S21Matrix::operator()(int row, int col) {
   }
   return this->matrix_[row][col];
 }
+
+bool S21Matrix::operator==(const S21Matrix &other) { return EqMatrix(other); }
