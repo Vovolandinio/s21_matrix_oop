@@ -1,7 +1,7 @@
 #ifndef S21_MATRIX_OOP_S21_MATRIX_OOP_H
 #define S21_MATRIX_OOP_S21_MATRIX_OOP_H
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 class S21Matrix {
  public:
@@ -16,11 +16,10 @@ class S21Matrix {
   void SetRows(const int &rows);
   void SetCols(const int &cols);
 
-  bool EqMatrix(const S21Matrix& other);
+  bool EqMatrix(const S21Matrix &other);
 
-
-    S21Matrix &operator=(const S21Matrix &other);
-  double& operator()(int row, int col);
+  S21Matrix &operator=(const S21Matrix &other);
+  double &operator()(int row, int col);
 
  private:
   int rows_, cols_;
