@@ -39,8 +39,6 @@ int S21Matrix::GetCols() const { return cols_; }
 
 int S21Matrix::GetRows() const { return rows_; }
 
-double **S21Matrix::GetMatrix() { return matrix_; }
-
 void S21Matrix::SetCols(const int &cols) {
   if (cols <= 0) {
     throw std::invalid_argument(
@@ -50,9 +48,9 @@ void S21Matrix::SetCols(const int &cols) {
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < cols_; j++) {
       if (j > cols_ - 1) {
-        newMatrix.GetMatrix()[i][j] = 0;
+          newMatrix(i, j) = 0;
       } else {
-        newMatrix.GetMatrix()[i][j] = this->matrix_[i][j];
+        newMatrix(i,j) = this->matrix_[i][j];
       }
     }
   }
@@ -70,9 +68,9 @@ void S21Matrix::SetRows(const int &rows) {
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < cols_; j++) {
             if (j > rows_ - 1) {
-                newMatrix.GetMatrix()[i][j] = 0;
+                newMatrix(i,j) = 0;
             } else {
-                newMatrix.GetMatrix()[i][j] = this->matrix_[i][j];
+                newMatrix(i,j) = this->matrix_[i][j];
             }
         }
     }
@@ -119,7 +117,7 @@ S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
   return *this;
 }
 
-double &S21Matrix::operator()(int row, int col) {
+double& S21Matrix::operator()(int row, int col) {
   if (row >= this->rows_ || col >= this->cols_ || row <= 0 || col <= 0) {
     throw std::invalid_argument("index is outside the matrix ERROR!");
   }
