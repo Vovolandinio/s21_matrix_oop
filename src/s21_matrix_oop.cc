@@ -40,7 +40,8 @@ int S21Matrix::GetCols() const { return cols_; }
 int S21Matrix::GetRows() const { return rows_; }
 
 void S21Matrix::SetCols(const int &cols) {
-  if (cols <= 0) {
+    cols_ = cols;
+    if (cols <= 0) {
     throw std::invalid_argument(
         "the values cannot be less than or equal to zero. ERROR!");
   }
@@ -60,6 +61,7 @@ void S21Matrix::SetCols(const int &cols) {
 
 
 void S21Matrix::SetRows(const int &rows) {
+    rows_ = rows;
     if (rows <= 0) {
         throw std::invalid_argument(
                 "the values cannot be less than or equal to zero. ERROR!");
@@ -76,6 +78,22 @@ void S21Matrix::SetRows(const int &rows) {
     }
     this->RemoveMatrix_();
     *this = newMatrix;
+}
+
+bool S21Matrix::EqMatrix(const S21Matrix& other) {
+    bool result = true;
+    if (this->rows_ != other.rows_ || this->cols_ != other.cols_) {
+        result = false;
+    } else {
+        for (int i = 0; i < this->rows_; i++) {
+            for (int j = 0; j < this->cols_; j++) {
+                if (fabs(this->matrix_[i][j] - other.matrix_[i][j]) > 1e-6) {
+                    result = false;
+                }
+            }
+        }
+    }
+    return result;
 }
 
 void S21Matrix::CreateMatrix_() {
@@ -118,7 +136,7 @@ S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
 }
 
 double& S21Matrix::operator()(int row, int col) {
-  if (row >= this->rows_ || col >= this->cols_ || row <= 0 || col <= 0) {
+  if (row >= this->rows_ || col >= this->cols_ || row < 0 || col < 0) {
     throw std::invalid_argument("index is outside the matrix ERROR!");
   }
   return this->matrix_[row][col];
