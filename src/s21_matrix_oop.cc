@@ -40,6 +40,7 @@ int S21Matrix::GetCols() const { return cols_; }
 int S21Matrix::GetRows() const { return rows_; }
 
 void S21Matrix::SetCols(const int &cols) {
+  int tmp = cols_;
   cols_ = cols;
   if (cols <= 0) {
     throw std::invalid_argument(
@@ -48,7 +49,7 @@ void S21Matrix::SetCols(const int &cols) {
   S21Matrix newMatrix(rows_, cols);
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < cols_; j++) {
-      if (j > cols_ - 1) {
+      if (j >= tmp) {
         newMatrix(i, j) = 0;
       } else {
         newMatrix(i, j) = this->matrix_[i][j];
@@ -60,6 +61,7 @@ void S21Matrix::SetCols(const int &cols) {
 }
 
 void S21Matrix::SetRows(const int &rows) {
+  int tmp = rows_;
   rows_ = rows;
   if (rows <= 0) {
     throw std::invalid_argument(
@@ -68,7 +70,7 @@ void S21Matrix::SetRows(const int &rows) {
   S21Matrix newMatrix(rows, cols_);
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < cols_; j++) {
-      if (j > rows_ - 1) {
+      if (i >= tmp) {
         newMatrix(i, j) = 0;
       } else {
         newMatrix(i, j) = this->matrix_[i][j];
