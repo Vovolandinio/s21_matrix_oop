@@ -33,8 +33,8 @@ STAT_LIBC_NAME=s21_matrix_oop.a
 CPPFLAGS=-Wall -Wextra -Werror -g -D $(D_ENV)
 HEADER=s21_matrix_oop.hpp
 SOURCES=s21_matrix_oop.cc
-
 OBJ=$(notdir $(SOURCES:.cc=.o))
+vpath %.o $(OBJ_DIR)
 
 #DIRECTORY
 OBJ_DIR=./objects
@@ -45,12 +45,9 @@ TEST_BINARY=s21_test
 OBJECTS_TEST=$(SOURCES_TEST :%.c=%.o)
 CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
 
-
 ### gcov
 GCOV=-coverage
 
-
-vpath %.o $(OBJ_DIR)
 
 ### make
 
@@ -86,6 +83,7 @@ clean_test:
 clean_s21_matrix_a:
 	-@rm -f $(STAT_LIBC_NAME)
 	-@rm -rf $(OBJ_DIR)
+	-@rm -rf s21_test.dSYM
 
 
 ### open
