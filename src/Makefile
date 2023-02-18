@@ -47,10 +47,8 @@ CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
 
 
 ### gcov
-INFO_GCOV=gcov_report_tests.info
-GCOV_DIR=tests_coverage
-CFLAGS_GCOV=$(CFLAGS_TEST) -fprofile-arcs -ftest-coverage
-CLIBS_GCOV=$(CLIBS_TEST)
+GCOV=-coverage
+
 
 vpath %.o $(OBJ_DIR)
 
@@ -72,6 +70,14 @@ s21_matrix_oop.a: $(OBJ) $(HEADERS)
 test: s21_matrix_oop.a
 	$(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o s21_test
 	-./$(TEST_BINARY)
+
+### coverage
+gcov_report:CPPFLAGS += $(GCOV)
+gcov_report: clean_test test
+	./s21_test
+	lcov -t "gcov_report" --no-external -o gcov_report.info -c -d ./
+	genhtml -o report gcov_report.info;
+	open ./report/index.html
 
 
 clean_test:
