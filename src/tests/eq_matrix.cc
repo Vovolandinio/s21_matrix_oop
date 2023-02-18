@@ -40,8 +40,3 @@ TEST(EqualMatrix, EqualMatrix) {
     test_matrix2(1, 2) = -34.0;
     EXPECT_EQ(test_matrix.EqMatrix(test_matrix2), true);
 }
-
-int main(int argc, char** argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

@@ -40,14 +40,13 @@ vpath %.o $(OBJ_DIR)
 OBJ_DIR=./objects
 
 ## tests
-SOURCES_TEST=tests/test.cc
+SOURCES_TEST=tests/*.cc
 TEST_BINARY=s21_test
 OBJECTS_TEST=$(SOURCES_TEST :%.c=%.o)
 CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
 
 ### gcov
 GCOV=-coverage
-
 
 ### make
 
