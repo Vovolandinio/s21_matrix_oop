@@ -107,6 +107,10 @@ bool S21Matrix::EqMatrix(const S21Matrix &other) {
   return result;
 }
 
+
+
+
+// private methods
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {
     throw std::invalid_argument(
