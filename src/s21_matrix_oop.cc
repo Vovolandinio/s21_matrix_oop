@@ -118,6 +118,17 @@ void S21Matrix::SumMatrix(const S21Matrix &other) {
   }
 }
 
+void S21Matrix::SubMatrix(const S21Matrix &other) {
+  if (!EqSizeMatrix(other)) {
+    throw std::invalid_argument("different matrix dimensions");
+  }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < cols_; j++) {
+      matrix_[i][j] -= other.matrix_[i][j];
+    }
+  }
+}
+
 // private methods
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {
