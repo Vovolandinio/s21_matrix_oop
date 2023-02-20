@@ -93,7 +93,7 @@ void S21Matrix::SetRows(const int &rows) {
 
 bool S21Matrix::EqMatrix(const S21Matrix &other) {
   bool result = true;
-  if (this->rows_ != other.rows_ || this->cols_ != other.cols_) {
+  if (this->rows_ != other.rows_ && this->cols_ != other.cols_) {
     result = false;
   } else {
     for (int i = 0; i < this->rows_; i++) {
@@ -107,8 +107,16 @@ bool S21Matrix::EqMatrix(const S21Matrix &other) {
   return result;
 }
 
-
-
+void S21Matrix::SumMatrix(const S21Matrix &other) {
+  if (!EqSizeMatrix(other)) {
+    throw std::invalid_argument("different matrix dimensions");
+  }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < cols_; j++) {
+      matrix_[i][j] += other.matrix_[i][j];
+    }
+  }
+}
 
 // private methods
 void S21Matrix::CreateMatrix_() {
@@ -124,6 +132,14 @@ void S21Matrix::CreateMatrix_() {
     for (int j = 0; j < this->cols_; ++j) {
       matrix_[i][j] = 0;
     }
+  }
+}
+
+bool S21Matrix::EqSizeMatrix(const S21Matrix &other) const {
+  if (this->rows_ == other.rows_ && this->cols_ == other.cols_) {
+    return true;
+  } else {
+    return false;
   }
 }
 

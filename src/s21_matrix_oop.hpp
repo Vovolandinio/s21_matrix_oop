@@ -15,6 +15,7 @@ class S21Matrix {
   int GetCols() const;
   void SetRows(const int &rows);
   void SetCols(const int &cols);
+  void SumMatrix(const S21Matrix &other);
 
   bool EqMatrix(const S21Matrix &other);
 
@@ -27,6 +28,7 @@ class S21Matrix {
   double **matrix_;
   void CreateMatrix_();
   void RemoveMatrix_();
+  bool EqSizeMatrix(const S21Matrix &other) const;
 };
 
 #endif  // S21_MATRIX_OOP_S21_MATRIX_OOP_H
