@@ -39,5 +39,12 @@ TEST(IncorrectMatrix, MatrixTwo) {
     S21Matrix incorrect (2,3);
     S21Matrix matrixTwo (3,3);
 
-    EXPECT_THROW(incorrect.SumMatrix(matrixTwo), std::invalid_argument());
+    EXPECT_THROW(incorrect.SumMatrix(matrixTwo), std::invalid_argument);
+}
+
+TEST(IncorrectMatrix, IncorrectMatrix) {
+    S21Matrix incorrect (3,2);
+    S21Matrix matrixTwo (3,3);
+
+    EXPECT_THROW(incorrect.SumMatrix(matrixTwo), std::invalid_argument);
 }
