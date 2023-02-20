@@ -87,6 +87,7 @@ clean_s21_matrix_a:
 	-@rm -rf $(OBJ_DIR)
 	-@rm -rf s21_test.dSYM
 
+fclean: clean_test clean_s21_matrix_a
 
 ### open
 open_html:
