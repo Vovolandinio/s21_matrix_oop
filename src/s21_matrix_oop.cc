@@ -58,9 +58,9 @@ void S21Matrix::SetCols(const int &cols) {
   }
   if (matrix_) {
     this->RemoveMatrix_();
-      matrix_ = nullptr;
-      rows_ = 0;
-      cols_ = 0;
+    matrix_ = nullptr;
+    rows_ = 0;
+    cols_ = 0;
   }
   *this = newMatrix;
 }

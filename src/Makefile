@@ -76,6 +76,9 @@ gcov_report: clean_test test
 	open ./report/index.html
 
 
+set_style:
+	sh make_style.sh
+
 clean_test:
 	-@rm -f $(TEST_BINARY)
 
