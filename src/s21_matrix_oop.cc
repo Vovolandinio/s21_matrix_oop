@@ -129,6 +129,18 @@ void S21Matrix::SubMatrix(const S21Matrix &other) {
   }
 }
 
+void S21Matrix::MulNumber(const double num) {
+  if (this->matrix_ != nullptr) {
+    for (int i = 0; i < rows_; ++i) {
+      for (int j = 0; j < cols_; ++j) {
+        matrix_[i][j] *= num;
+      }
+    }
+  } else {
+    throw std::invalid_argument("The values cannot be null. ERROR!");
+  }
+}
+
 // private methods
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {

@@ -136,3 +136,25 @@ TEST(SubMatrix, SubMatrixIncorrect) {
     EXPECT_THROW(matrixOne.SubMatrix(matrixTwo), std::invalid_argument);
 
 }
+
+TEST(MulNumber, bigMatrix) {
+    S21Matrix test_matrix(20, 20);
+    for (int i = 0; i < test_matrix.GetRows(); i++) {
+        for (int j = 0; j < test_matrix.GetCols(); j++) {
+            test_matrix(i, j) = 2;
+        }
+    }
+    test_matrix.MulNumber(0.1);
+    for (int i = 0; i < test_matrix.GetRows(); i++) {
+        for (int j = 0; j < test_matrix.GetCols(); j++) {
+            EXPECT_DOUBLE_EQ(test_matrix(i, j), 0.2);
+        }
+    }
+}
+
+TEST(MulNumber, smallMatrix) {
+    S21Matrix test_matrix(1,1);
+    test_matrix(0,0) = 3.3;
+    test_matrix.MulNumber(3);
+    EXPECT_DOUBLE_EQ(test_matrix(0,0), 9.9);
+}

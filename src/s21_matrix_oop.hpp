@@ -17,6 +17,7 @@ class S21Matrix {
   void SetCols(const int &cols);
   void SumMatrix(const S21Matrix &other);
   void SubMatrix(const S21Matrix &other);
+  void MulNumber(const double num);
 
   bool EqMatrix(const S21Matrix &other);
 
