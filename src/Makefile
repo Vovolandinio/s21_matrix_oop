@@ -24,8 +24,21 @@ ifeq ($(UNAME), Darwin)
 OPEN=open
 endif
 
+ifeq ($(UNAME), Linux)
+CPPFLAGS_TEST= -lgtest -lpthread
+endif
+ifeq ($(UNAME), Darwin)
+CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
+endif
+
 ### C++
+ifeq ($(UNAME), Linux)
+CC=g++
+endif
+ifeq ($(UNAME), Darwin)
 CC=gcc
+endif
+
 STAT_LIBC_BUILD=ar rcs
 
 ### s21_matrix_oop.a
@@ -43,7 +56,6 @@ OBJ_DIR=./objects
 SOURCES_TEST=tests/*.cc
 TEST_BINARY=s21_test
 OBJECTS_TEST=$(SOURCES_TEST :%.c=%.o)
-CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
 
 ### gcov
 GCOV=-coverage
