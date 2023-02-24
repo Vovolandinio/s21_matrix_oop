@@ -173,12 +173,10 @@ S21Matrix S21Matrix::Transpose() {
 }
 
 S21Matrix S21Matrix::CalcComplements() {
-    if (cols_ != rows_) {
-        throw std::invalid_argument("the matrix is not square");
-    }
-
+  if (cols_ != rows_) {
+    throw std::invalid_argument("the matrix is not square");
+  }
 }
-
 
 // private methods
 void S21Matrix::CreateMatrix_() {
