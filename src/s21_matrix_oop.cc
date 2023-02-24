@@ -141,22 +141,23 @@ void S21Matrix::MulNumber(const double num) {
   }
 }
 
-void S21Matrix::MulMatrix(const S21Matrix& other) {
-    if (this->cols_ != other.rows_) {
-        throw std::invalid_argument(
-                "the number of columns of the first matrix is not equal to the number of rows of the second matrix. ERROR!");
-    } else {
-        S21Matrix result(this->rows_, other.cols_);
-        for (int i = 0; i < this->rows_; i++) {
-            for (int j = 0; j < other.cols_; j++) {
-                result.matrix_[i][j] = 0;
-                for (int k = 0; k < this->cols_; k++) {
-                    result.matrix_[i][j] += matrix_[i][k] * other.matrix_[k][j];
-                }
-            }
+void S21Matrix::MulMatrix(const S21Matrix &other) {
+  if (this->cols_ != other.rows_) {
+    throw std::invalid_argument(
+        "the number of columns of the first matrix is not equal to the number "
+        "of rows of the second matrix. ERROR!");
+  } else {
+    S21Matrix result(this->rows_, other.cols_);
+    for (int i = 0; i < this->rows_; i++) {
+      for (int j = 0; j < other.cols_; j++) {
+        result.matrix_[i][j] = 0;
+        for (int k = 0; k < this->cols_; k++) {
+          result.matrix_[i][j] += matrix_[i][k] * other.matrix_[k][j];
         }
-        *this = result;
+      }
     }
+    *this = result;
+  }
 }
 
 // private methods
