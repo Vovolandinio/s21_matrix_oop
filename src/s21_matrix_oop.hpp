@@ -20,6 +20,7 @@ class S21Matrix {
   void MulNumber(const double num);
   void MulMatrix(const S21Matrix &other);
   S21Matrix Transpose();
+  S21Matrix CalcComplements();
 
   bool EqMatrix(const S21Matrix &other);
 
