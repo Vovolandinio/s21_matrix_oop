@@ -12,11 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: build library
-      run: src/make s21_matrix_oop.a
-
-
-
-
-      
+      - uses: actions/checkout@v3
+      - name: configure
+        run: ./configure
+      - name: make
+        run: make
