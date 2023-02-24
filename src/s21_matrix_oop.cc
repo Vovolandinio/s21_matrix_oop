@@ -148,16 +148,28 @@ void S21Matrix::MulMatrix(const S21Matrix &other) {
         "of rows of the second matrix. ERROR!");
   } else {
     S21Matrix result(this->rows_, other.cols_);
-    for (int i = 0; i < this->rows_; i++) {
-      for (int j = 0; j < other.cols_; j++) {
-        result.matrix_[i][j] = 0;
+    for (int m = 0; m < this->rows_; m++) {
+      for (int n = 0; n < other.cols_; n++) {
+        result.matrix_[m][n] = 0;
         for (int k = 0; k < this->cols_; k++) {
-          result.matrix_[i][j] += matrix_[i][k] * other.matrix_[k][j];
+          result.matrix_[m][n] += matrix_[m][k] * other.matrix_[k][n];
         }
       }
     }
     *this = result;
   }
+}
+
+S21Matrix S21Matrix::Transpose() {
+  S21Matrix result(cols_, rows_);
+  if (matrix_ && rows_ > 0 && cols_ > 0) {
+    for (int i = 0; i < result.rows_; i++) {
+      for (int j = 0; j < result.cols_; j++) {
+        result.matrix_[i][j] = matrix_[j][i];
+      }
+    }
+  }
+  return result;
 }
 
 // private methods
