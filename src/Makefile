@@ -32,12 +32,8 @@ CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
 endif
 
 ### C++
-ifeq ($(UNAME), Linux)
 CC=g++
-endif
-ifeq ($(UNAME), Darwin)
-CC=gcc
-endif
+
 
 STAT_LIBC_BUILD=ar rcs
 

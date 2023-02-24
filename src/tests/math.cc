@@ -158,3 +158,40 @@ TEST(MulNumber, smallMatrix) {
     test_matrix.MulNumber(3);
     EXPECT_DOUBLE_EQ(test_matrix(0,0), 9.9);
 }
+
+TEST(MulMatrix, MulMatrixNormal) {
+    S21Matrix test_matrix(2, 2);
+    test_matrix(0, 0) = 3.0;
+    test_matrix(0, 1) = -3.0;
+    test_matrix(1, 0) = -1.0;
+    test_matrix(1, 1) = 5.0;
+
+    S21Matrix other_matrix(2, 2);
+    other_matrix(0, 0) = 5.0;
+    other_matrix(0, 1) = 3.0;
+    other_matrix(1, 0) = 1.0;
+    other_matrix(1, 1) = 3.0;
+
+    S21Matrix mulResult(2, 2);
+    mulResult(0, 0) = 12.0;
+    mulResult(0, 1) = 0.0;
+    mulResult(1, 0) = 0.0;
+    mulResult(1, 1) = 12.0;
+    test_matrix.MulMatrix(other_matrix);
+    EXPECT_EQ(test_matrix == mulResult, true);
+}
+
+TEST(MulMatrix,incorrectMatrix) {
+    S21Matrix test_matrix(2, 2);
+    test_matrix(0, 0) = 3.0;
+    test_matrix(0, 1) = -3.0;
+
+    S21Matrix other_matrix(2, 1);
+    other_matrix(0, 0) = 5.0;
+    other_matrix(0, 1) = 3.0;
+    other_matrix(1, 0) = 1.0;
+    other_matrix(1, 1) = 3.0;
+
+    EXPECT_THROW(test_matrix.MulMatrix(other_matrix),std::invalid_argument);
+
+}
