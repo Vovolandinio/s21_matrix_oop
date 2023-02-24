@@ -182,11 +182,11 @@ TEST(MulMatrix, MulMatrixNormal) {
 }
 
 TEST(MulMatrix,incorrectMatrix) {
-    S21Matrix test_matrix(2, 2);
+    S21Matrix test_matrix(2, 5);
     test_matrix(0, 0) = 3.0;
     test_matrix(0, 1) = -3.0;
 
-    S21Matrix other_matrix(2, 1);
+    S21Matrix other_matrix(2, 2);
     other_matrix(0, 0) = 5.0;
     other_matrix(0, 1) = 3.0;
     other_matrix(1, 0) = 1.0;
