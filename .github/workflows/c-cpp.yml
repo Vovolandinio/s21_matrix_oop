@@ -16,4 +16,5 @@ jobs:
       - name: to source
         run: cd src
       - name: build
+        working-directory: ${{github.workspace}}
         run: make
