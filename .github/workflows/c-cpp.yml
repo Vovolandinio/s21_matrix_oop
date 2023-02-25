@@ -16,3 +16,14 @@ jobs:
       - name: build
         working-directory: ${{github.workspace}}/src
         run: make
+        
+  check:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: check_style
+        working-directory: ${{github.workspace}}/src
+        run: make check_style
+  
