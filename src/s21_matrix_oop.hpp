@@ -22,6 +22,7 @@ class S21Matrix {
   S21Matrix Transpose();
   double Determinant();
   bool EqMatrix(const S21Matrix &other);
+  S21Matrix CalcComplements();
 
   bool operator==(const S21Matrix &other);
   S21Matrix &operator=(const S21Matrix &other);
