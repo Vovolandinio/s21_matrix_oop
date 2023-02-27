@@ -172,9 +172,7 @@ S21Matrix S21Matrix::Transpose() {
   return *this = result;
 }
 
-double S21Matrix::Determinant() {
-
-}
+double S21Matrix::Determinant() {}
 
 // private methods
 void S21Matrix::CreateMatrix_() {
@@ -233,20 +231,18 @@ double &S21Matrix::operator()(int row, int col) {
 
 bool S21Matrix::operator==(const S21Matrix &other) { return EqMatrix(other); }
 
-
-void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix& other) {
-    int offset_row = 0;
-    for (int i = 0; i < rows_ - 1; i++) {
-        if (i == del_row) {
-            offset_row = 1;
-        }
-        int offset_column = 0;
-        for (int j = 0; j < rows_ - 1; j++) {
-            if (j == del_col) {
-                offset_column = 1;
-            }
-            other.matrix_[i][j] = matrix_[i + offset_row][j + offset_column];
-        }
+void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) {
+  int offset_row = 0;
+  for (int i = 0; i < rows_ - 1; i++) {
+    if (i == del_row) {
+      offset_row = 1;
     }
+    int offset_column = 0;
+    for (int j = 0; j < rows_ - 1; j++) {
+      if (j == del_col) {
+        offset_column = 1;
+      }
+      other.matrix_[i][j] = matrix_[i + offset_row][j + offset_column];
+    }
+  }
 }
-

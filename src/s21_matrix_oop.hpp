@@ -33,7 +33,7 @@ class S21Matrix {
   void CreateMatrix_();
   void RemoveMatrix_();
   bool EqSizeMatrix(const S21Matrix &other) const;
-  void CropMatrix_(int del_row, int del_col, S21Matrix& other);
+  void CropMatrix_(int del_row, int del_col, S21Matrix &other);
 };
 
 #endif  // S21_MATRIX_OOP_S21_MATRIX_OOP_H
