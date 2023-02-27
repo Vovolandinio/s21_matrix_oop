@@ -17,7 +17,7 @@ jobs:
         working-directory: ${{github.workspace}}/src
         run: make
         
-  check:
+  style_check:
 
     runs-on: ubuntu-latest
 
