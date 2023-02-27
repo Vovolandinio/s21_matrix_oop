@@ -20,8 +20,7 @@ class S21Matrix {
   void MulNumber(const double num);
   void MulMatrix(const S21Matrix &other);
   S21Matrix Transpose();
-  S21Matrix CalcComplements();
-
+  double Determinant();
   bool EqMatrix(const S21Matrix &other);
 
   bool operator==(const S21Matrix &other);
@@ -34,6 +33,7 @@ class S21Matrix {
   void CreateMatrix_();
   void RemoveMatrix_();
   bool EqSizeMatrix(const S21Matrix &other) const;
+  void CropMatrix_(int del_row, int del_col, S21Matrix& other);
 };
 
 #endif  // S21_MATRIX_OOP_S21_MATRIX_OOP_H
