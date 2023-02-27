@@ -25,8 +25,7 @@ class S21Matrix {
   S21Matrix CalcComplements();
   S21Matrix InverseMatrix();
 
-
-    bool operator==(const S21Matrix &other);
+  bool operator==(const S21Matrix &other);
   S21Matrix &operator=(const S21Matrix &other);
   double &operator()(int row, int col);
 

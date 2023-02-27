@@ -208,19 +208,19 @@ S21Matrix S21Matrix::CalcComplements() {
 }
 
 S21Matrix S21Matrix::InverseMatrix() {
-    double det = this->Determinant();
-    if (fabs(det) < 1e-6) {
-        throw std::invalid_argument("matrix determinant is 0.");
-    }
-    S21Matrix result = this->CalcComplements();
-    result = result.Transpose();
+  double det = this->Determinant();
+  if (fabs(det) < 1e-6) {
+    throw std::invalid_argument("matrix determinant is 0.");
+  }
+  S21Matrix result = this->CalcComplements();
+  result = result.Transpose();
 
-    for (int i = 0; i < result.rows_; i++) {
-        for (int j = 0; j < result.cols_; j++) {
-            result.matrix_[i][j] = result.matrix_[i][j] / det;
-        }
+  for (int i = 0; i < result.rows_; i++) {
+    for (int j = 0; j < result.cols_; j++) {
+      result.matrix_[i][j] = result.matrix_[i][j] / det;
     }
-    return result;
+  }
+  return result;
 }
 
 // private methods
