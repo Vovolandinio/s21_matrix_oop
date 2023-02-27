@@ -190,26 +190,25 @@ double S21Matrix::Determinant() {
   return determinant;
 }
 
-
 S21Matrix S21Matrix::CalcComplements() {
-    if (cols_ != rows_) {
-        throw std::invalid_argument("The matrix is not square.");
-    }
+  if (cols_ != rows_) {
+    throw std::invalid_argument("The matrix is not square.");
+  }
 
-    S21Matrix result(rows_, cols_);
-    if (rows_ == 1) {
-        result.matrix_[0][0] = 1;
+  S21Matrix result(rows_, cols_);
+  if (rows_ == 1) {
+    result.matrix_[0][0] = 1;
+  }
+  for (int i = 0; i < rows_; ++i) {
+    for (int j = 0; j < cols_; ++j) {
+      S21Matrix temp_matrix(rows_ - 1, cols_ - 1);
+      CropMatrix_(i, j, temp_matrix);
+      double temp = temp_matrix.Determinant();
+      result.matrix_[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * temp;
     }
-    for (int i = 0; i < rows_; ++i) {
-        for (int j = 0; j < cols_; ++j) {
-            S21Matrix temp_matrix(rows_ - 1, cols_ - 1);
-            CropMatrix_(i, j, temp_matrix);
-            double temp = temp_matrix.Determinant();
-            result.matrix_[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * temp;
-        }
-    }
+  }
 
-    return *this = result;
+  return *this = result;
 }
 
 // private methods
