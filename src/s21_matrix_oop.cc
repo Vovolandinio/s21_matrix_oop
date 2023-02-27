@@ -196,9 +196,6 @@ S21Matrix S21Matrix::CalcComplements() {
   }
 
   S21Matrix result(rows_, cols_);
-  if (rows_ == 1) {
-    result.matrix_[0][0] = 1;
-  }
   for (int i = 0; i < rows_; ++i) {
     for (int j = 0; j < cols_; ++j) {
       S21Matrix temp_matrix(rows_ - 1, cols_ - 1);
@@ -207,7 +204,6 @@ S21Matrix S21Matrix::CalcComplements() {
       result.matrix_[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * temp;
     }
   }
-
   return *this = result;
 }
 
