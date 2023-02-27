@@ -169,13 +169,14 @@ S21Matrix S21Matrix::Transpose() {
       }
     }
   }
-  return result;
+  return *this = result;
 }
 
 //S21Matrix S21Matrix::CalcComplements() {
 //  if (cols_ != rows_) {
 //    throw std::invalid_argument("the matrix is not square");
 //  }
+//    return S21Matrix();
 //}
 
 // private methods
