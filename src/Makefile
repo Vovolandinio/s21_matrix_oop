@@ -42,7 +42,7 @@ CPPFLAGS=-Wall -Wextra -Werror -g -D $(D_ENV)
 HEADER=s21_matrix_oop.hpp
 SOURCES=s21_matrix_oop.cc
 OBJ=$(notdir $(SOURCES:.cc=.o))
-vpath %.o $(OBJ_DIR)
+#vpath %.o $(OBJ_DIR)
 
 #DIRECTORY
 OBJ_DIR=./objects
@@ -101,6 +101,7 @@ fclean: clean_test clean_s21_matrix_a
 	-@rm -f *.gcda
 	-@rm -f *.gcno
 	-@rm -f *.info
+	-@rm -rf report
 
 ### open
 open_html:

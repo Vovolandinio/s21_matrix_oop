@@ -28,11 +28,16 @@ TEST(constructor, setLessRow) {
     EXPECT_EQ(3, test_matrix.GetCols());
 }
 
-TEST(constructor, setGreaterRowD) {
+TEST(constructor, setGreaterRow) {
     S21Matrix test_matrix(5, 10);
     test_matrix.SetRows(30);
     EXPECT_EQ(30, test_matrix.GetRows());
     EXPECT_EQ(10, test_matrix.GetCols());
+}
+
+TEST(constructor, setIncorrectRow) {
+    S21Matrix test_matrix(5, 10);
+    EXPECT_ANY_THROW(test_matrix.SetRows(0));
 }
 
 TEST(constructor, setEqualRow) {
@@ -49,6 +54,11 @@ TEST(constructor, setGreaterColsDefault) {
     EXPECT_EQ(5, test_matrix.GetRows());
 }
 
+TEST(constructor, setIncorrectCols) {
+    S21Matrix test_matrix(5, 10);
+    EXPECT_ANY_THROW(test_matrix.SetCols(0));
+}
+
 TEST(constructor, setLessColsDefault) {
     S21Matrix test_matrix(5, 10);
     test_matrix.SetCols(3);
@@ -62,7 +72,6 @@ TEST(constructor, setLessEqualDefault) {
     EXPECT_EQ(10, test_matrix.GetCols());
     EXPECT_EQ(1, test_matrix.GetRows());
 }
-
 
 TEST(constructor, moveConstructor) {
     S21Matrix test_matrix(2, 2);

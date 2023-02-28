@@ -25,12 +25,12 @@ S21Matrix::S21Matrix(const S21Matrix &other) {
 }
 
 S21Matrix::S21Matrix(S21Matrix &&other) noexcept {
-    std::swap(matrix_, other.matrix_);
-    std::swap(rows_, other.rows_);
-    std::swap(cols_, other.cols_);
-    other.rows_ = 0;
-    other.cols_ = 0;
-    other.matrix_ = new double*[0];
+  std::swap(matrix_, other.matrix_);
+  std::swap(rows_, other.rows_);
+  std::swap(cols_, other.cols_);
+  other.rows_ = 0;
+  other.cols_ = 0;
+  other.matrix_ = new double *[0];
 }
 
 S21Matrix::~S21Matrix() { RemoveMatrix_(); }
@@ -265,15 +265,20 @@ double S21Matrix::Determinant() {
   double determinant = 0.0;
   if (rows_ == 1) {
     determinant = this->matrix_[0][0];
-  } else if (rows_ == 2) {
-    determinant = this->matrix_[0][0] * this->matrix_[1][1] -
-                  (this->matrix_[0][1] * this->matrix_[1][0]);
-  } else if (rows_ > 2) {
-    S21Matrix new_matrix(this->rows_ - 1, this->cols_);
-    for (int j = 0; j < rows_; j++) {
-      CropMatrix_(0, j, new_matrix);
+  } else {
+    S21Matrix new_matrix(rows_ - 1, cols_ - 1);
+    for (int j = 0; j < cols_; ++j) {
+      for (int i = 1; i < rows_; ++i) {
+        for (int k = 0; k < cols_; ++k) {
+          if (k < j) {
+            new_matrix.matrix_[i - 1][k] = matrix_[i][k];
+          } else if (k > j) {
+            new_matrix.matrix_[i - 1][k - 1] = matrix_[i][k];
+          }
+        }
+      }
       determinant +=
-          ((j % 2) ? -1 : 1) * (matrix_[0][j] * new_matrix.Determinant());
+          ((j % 2 == 0) ? 1 : -1) * matrix_[0][j] * new_matrix.Determinant();
     }
   }
   return determinant;
@@ -315,6 +320,7 @@ S21Matrix S21Matrix::InverseMatrix() {
 /*
  * private
  */
+
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {
     throw std::invalid_argument(
