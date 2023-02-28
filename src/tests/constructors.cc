@@ -80,3 +80,14 @@ TEST(constructor, moveConstructor) {
         }
     }
 }
+
+TEST(S21MatrixTest, CopyConstructorTest) {
+    S21Matrix mat1(3, 3);
+    mat1(0, 0) = 1;
+    mat1(1, 1) = 2;
+    mat1(2, 2) = 3;
+
+    S21Matrix mat2(mat1);
+
+    EXPECT_EQ(mat1(0,0), mat2(0,0));
+}
