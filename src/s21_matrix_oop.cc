@@ -25,12 +25,12 @@ S21Matrix::S21Matrix(const S21Matrix &other) {
 }
 
 S21Matrix::S21Matrix(S21Matrix &&other) noexcept {
-  std::swap(matrix_, other.matrix_);
-  std::swap(rows_, other.rows_);
-  std::swap(cols_, other.cols_);
-  matrix_ = nullptr;
-  rows_ = 0;
-  cols_ = 0;
+    std::swap(matrix_, other.matrix_);
+    std::swap(rows_, other.rows_);
+    std::swap(cols_, other.cols_);
+    other.rows_ = 0;
+    other.cols_ = 0;
+    other.matrix_ = new double*[0];
 }
 
 S21Matrix::~S21Matrix() { RemoveMatrix_(); }

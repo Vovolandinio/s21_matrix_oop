@@ -63,3 +63,20 @@ TEST(constructor, setLessEqualDefault) {
     EXPECT_EQ(1, test_matrix.GetRows());
 }
 
+
+TEST(constructor, moveConstructor) {
+    S21Matrix test_matrix(2, 2);
+    test_matrix(0, 0) = 1;
+    test_matrix(0, 1) = 2;
+    test_matrix(1, 0) = 3;
+    test_matrix(1, 1) = 4;
+    S21Matrix other_matrix(std::move(test_matrix));
+    EXPECT_EQ(2, other_matrix.GetRows());
+    EXPECT_EQ(2, other_matrix.GetCols());
+    double k = 1;
+    for (int i = 0; i < other_matrix.GetRows(); i++) {
+        for (int j = 0; j < other_matrix.GetCols(); j++) {
+            EXPECT_DOUBLE_EQ(other_matrix(i, j), k++);
+        }
+    }
+}
