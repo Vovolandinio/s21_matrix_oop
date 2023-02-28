@@ -25,10 +25,10 @@ OPEN=open
 endif
 
 ifeq ($(UNAME), Linux)
-CPPFLAGS_TEST= -lgtest -lpthread
+CPPFLAGS_TEST= -lgtest -lpthread -fprofile-arcs -ftest-coverage
 endif
 ifeq ($(UNAME), Darwin)
-CPPFLAGS_TEST= -lgtest -lstdc++ -pthread
+CPPFLAGS_TEST= -lgtest -lstdc++ -pthread -fprofile-arcs -ftest-coverage
 endif
 
 ### C++
@@ -100,6 +100,7 @@ clean_s21_matrix_a:
 fclean: clean_test clean_s21_matrix_a
 	-@rm -f *.gcda
 	-@rm -f *.gcno
+	-@rm -f *.info
 
 ### open
 open_html:
