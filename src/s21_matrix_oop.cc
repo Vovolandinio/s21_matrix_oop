@@ -91,6 +91,95 @@ void S21Matrix::SetRows(const int &rows) {
   *this = newMatrix;
 }
 
+/*
+ * overload
+ */
+
+S21Matrix S21Matrix::operator+(const S21Matrix &other) {
+  S21Matrix result(*this);
+  result.SumMatrix(other);
+  return result;
+}
+
+S21Matrix S21Matrix::operator-(const S21Matrix &other) {
+  S21Matrix result(*this);
+  result.SubMatrix(other);
+  return result;
+}
+
+S21Matrix S21Matrix::operator*(const S21Matrix &other) {
+  S21Matrix result(*this);
+  result.MulMatrix(other);
+  return result;
+}
+
+S21Matrix S21Matrix::operator*(const double &number) {
+  S21Matrix result(*this);
+  result.MulNumber(number);
+  return result;
+}
+
+S21Matrix &S21Matrix::operator-=(const S21Matrix &other) {
+  this->SubMatrix(other);
+  return *this;
+}
+
+S21Matrix &S21Matrix::operator+=(const S21Matrix &other) {
+  this->SumMatrix(other);
+  return *this;
+}
+
+S21Matrix &S21Matrix::operator*=(const S21Matrix &other) {
+  this->MulMatrix(other);
+  return *this;
+}
+
+S21Matrix &S21Matrix::operator*=(const double &number) {
+  this->MulNumber(number);
+  return *this;
+}
+
+bool S21Matrix::operator==(const S21Matrix &other) { return EqMatrix(other); }
+
+S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
+  if (this == &other) {
+    return *this;
+  }
+
+  if (matrix_ != nullptr) {
+    for (int i = 0; i < rows_; i++) {
+      delete[] matrix_[i];
+    }
+    delete[] matrix_;
+  }
+
+  rows_ = other.rows_;
+  cols_ = other.cols_;
+  CreateMatrix_();
+
+  if (matrix_ != nullptr) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < cols_; j++) {
+        if (matrix_[i] != nullptr) {
+          this->matrix_[i][j] = other.matrix_[i][j];
+        }
+      }
+    }
+  }
+  return *this;
+}
+
+double &S21Matrix::operator()(int row, int col) {
+  if (row >= this->rows_ || col >= this->cols_ || row < 0 || col < 0) {
+    throw std::invalid_argument("Index is outside the matrix ERROR!");
+  }
+  return this->matrix_[row][col];
+}
+
+/*
+ * public
+ */
+
 bool S21Matrix::EqMatrix(const S21Matrix &other) {
   bool result = true;
   if (this->rows_ != other.rows_ && this->cols_ != other.cols_) {
@@ -223,7 +312,9 @@ S21Matrix S21Matrix::InverseMatrix() {
   return result;
 }
 
-// private methods
+/*
+ * private
+ */
 void S21Matrix::CreateMatrix_() {
   if (rows_ <= 0 || cols_ <= 0) {
     throw std::invalid_argument(
@@ -254,31 +345,6 @@ void S21Matrix::RemoveMatrix_() {
   cols_ = 0;
   matrix_ = nullptr;
 }
-
-S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
-  rows_ = other.rows_;
-  cols_ = other.cols_;
-  CreateMatrix_();
-  if (matrix_ != nullptr) {
-    for (int i = 0; i < rows_; i++) {
-      for (int j = 0; j < cols_; j++) {
-        if (matrix_[i] != nullptr) {
-          this->matrix_[i][j] = other.matrix_[i][j];
-        }
-      }
-    }
-  }
-  return *this;
-}
-
-double &S21Matrix::operator()(int row, int col) {
-  if (row >= this->rows_ || col >= this->cols_ || row < 0 || col < 0) {
-    throw std::invalid_argument("index is outside the matrix ERROR!");
-  }
-  return this->matrix_[row][col];
-}
-
-bool S21Matrix::operator==(const S21Matrix &other) { return EqMatrix(other); }
 
 void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) {
   for (int i = 0; i < rows_; i++) {
