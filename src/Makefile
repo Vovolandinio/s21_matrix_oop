@@ -76,13 +76,12 @@ test: s21_matrix_oop.a
 	./$(TEST_BINARY)
 
 ### coverage
-gcov_report: clean_test test
-	$(CC) $(CPPFLAGS) -c s21_matrix_oop.cc -o s21_matrix_oop.gcda
-	./$(TEST_BINARY)
-	mkdir -p $(GCOV_DIR)
-	lcov --capture --directory . --output-file $(GCOV_DIR)/coverage.info
-	genhtml -o $(GCOV_DIR)/results $(GCOV_DIR)/coverage.info
-	$(OPEN) $(GCOV_DIR)/results/index.html
+gcov_report:FLAGS += $(GCOV)
+gcov_report: fclean test
+	./s21_test
+	lcov -t "gcov_report" --no-external -o gcov_report.info -c -d ./
+	genhtml -o report gcov_report.info;
+	open ./report/index.html
 
 set_style:
 	sh make_style.sh
