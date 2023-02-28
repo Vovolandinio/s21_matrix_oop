@@ -270,7 +270,7 @@ double S21Matrix::Determinant() {
                   (this->matrix_[0][1] * this->matrix_[1][0]);
   } else if (rows_ > 2) {
     S21Matrix new_matrix(this->rows_ - 1, this->cols_);
-    for (int j = 0; j < rows_; j++, rows_) {
+    for (int j = 0; j < rows_; j++) {
       CropMatrix_(0, j, new_matrix);
       determinant +=
           ((j % 2) ? -1 : 1) * (matrix_[0][j] * new_matrix.Determinant());

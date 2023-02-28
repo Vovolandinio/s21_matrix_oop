@@ -34,7 +34,6 @@ endif
 ### C++
 CC=g++
 
-
 STAT_LIBC_BUILD=ar rcs
 
 ### s21_matrix_oop.a
@@ -55,6 +54,7 @@ OBJECTS_TEST=$(SOURCES_TEST :%.c=%.o)
 
 ### gcov
 GCOV=-coverage
+GCOV_DIR=./gcov_report
 
 ### make
 
@@ -72,17 +72,17 @@ s21_matrix_oop.a: $(OBJ) $(HEADERS)
 
 ### test
 test: s21_matrix_oop.a
-	$(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o s21_test
-	-./$(TEST_BINARY)
+	$(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o $(TEST_BINARY)
+	./$(TEST_BINARY)
 
 ### coverage
-gcov_report:CPPFLAGS += $(GCOV)
 gcov_report: clean_test test
-	./s21_test
-	lcov -t "gcov_report" --no-external -o gcov_report.info -c -d ./
-	genhtml -o report gcov_report.info;
-	open ./report/index.html
-
+	$(CC) $(CPPFLAGS) -c s21_matrix_oop.cc -o s21_matrix_oop.gcda
+	./$(TEST_BINARY)
+	mkdir -p $(GCOV_DIR)
+	lcov --capture --directory . --output-file $(GCOV_DIR)/coverage.info
+	genhtml -o $(GCOV_DIR)/results $(GCOV_DIR)/coverage.info
+	$(OPEN) $(GCOV_DIR)/results/index.html
 
 set_style:
 	sh make_style.sh
@@ -96,9 +96,11 @@ clean_test:
 clean_s21_matrix_a:
 	-@rm -f $(STAT_LIBC_NAME)
 	-@rm -rf $(OBJ_DIR)
-	-@rm -rf s21_test.dSYM
+	-@rm -rf $(TEST_BINARY).dSYM
 
 fclean: clean_test clean_s21_matrix_a
+	-@rm -f *.gcda
+	-@rm -f *.gcno
 
 ### open
 open_html:
