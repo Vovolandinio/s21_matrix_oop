@@ -9,12 +9,12 @@ D_ENV=__MAC_OS__
 endif
 
 ### memory leaking
-ifeq ($(UNAME), Linux)
-LEAKS_CHECKING=valgrind -q --track-origins=yes --tool=memcheck --leak-check=full ./$(TESTS_NAME) ./$(STAT_LIBC_NAME) ./$(GCOV_NAME)
-endif
-ifeq ($(UNAME), Darwin)
-LEAKS_CHECKING=CK_FORK=no leaks --atExit -- ./$(TESTS_NAME) ./$(STAT_LIBC_NAME) ./$(GCOV_NAME)
-endif
+#ifeq ($(UNAME), Linux)
+#LEAKS_CHECKING=valgrind -q --track-origins=yes --tool=memcheck --leak-check=full ./$(TEST_BINARY)
+#endif
+#ifeq ($(UNAME), Darwin)
+#LEAKS_CHECKING=CK_FORK=no leaks --atExit -- ./s21_test
+#endif
 
 ### open
 ifeq ($(UNAME), Linux)
@@ -41,7 +41,6 @@ CPPFLAGS=-Wall -Wextra -Werror -g -D $(D_ENV)
 HEADER=s21_matrix_oop.hpp
 SOURCES=s21_matrix_oop.cc
 OBJ=$(notdir $(SOURCES:.cc=.o))
-#vpath %.o $(OBJ_DIR)
 
 #DIRECTORY
 OBJ_DIR=./objects
@@ -84,8 +83,12 @@ gcov_report: fclean test
 	genhtml -o report gcov_report.info;
 	open ./report/index.html
 
-set_style:
-	sh make_style.sh
+valgrind: test
+ifeq ($(UNAME), Linux)
+	valgrind --leak-check=full ./s21_test
+else
+	CK_FORK=no leaks --atExit -- ./s21_test
+endif
 
 check_style:
 	sh check_style.sh

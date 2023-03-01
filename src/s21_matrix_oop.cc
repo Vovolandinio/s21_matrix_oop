@@ -346,11 +346,17 @@ bool S21Matrix::EqSizeMatrix(const S21Matrix &other) const {
 }
 
 void S21Matrix::RemoveMatrix_() {
-  delete[] matrix_;
-  rows_ = 0;
-  cols_ = 0;
-  matrix_ = nullptr;
-}
+        if (matrix_ != nullptr) {
+            for (int i = 0; i < rows_; ++i) {
+                delete[] matrix_[i];
+            }
+            delete[] matrix_;
+            matrix_ = nullptr;
+            rows_ = 0;
+            cols_ = 0;
+        }
+    }
+
 
 void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) {
   for (int i = 0; i < rows_; i++) {
