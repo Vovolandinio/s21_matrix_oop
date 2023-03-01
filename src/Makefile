@@ -70,7 +70,7 @@ s21_matrix_oop.a: $(OBJ) $(HEADERS)
 
 ### test
 test: s21_matrix_oop.a
-	$(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o $(TEST_BINARY) -fprofile-arcs -ftest-coverage -lgcov
+	fsanitize=address $(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o $(TEST_BINARY) -fprofile-arcs -ftest-coverage -lgcov
 	./$(TEST_BINARY)
 	-@rm -f *.gcda
 	-@rm -f *.gcno

@@ -39,54 +39,52 @@ int S21Matrix::GetCols() const { return cols_; }
 
 int S21Matrix::GetRows() const { return rows_; }
 
-void S21Matrix::SetCols(const int &cols) {
-  if (cols <= 0) {
-    throw std::invalid_argument(
-        "the values cannot be less than or equal to zero. ERROR!");
-  }
-  int tmp = cols_;
-  cols_ = cols;
-  S21Matrix newMatrix(rows_, cols);
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < cols_; j++) {
-      if (j >= tmp) {
-        newMatrix(i, j) = 0;
-      } else {
-        newMatrix(i, j) = this->matrix_[i][j];
-      }
-    }
-  }
-  if (matrix_) {
-    this->RemoveMatrix_();
-    matrix_ = nullptr;
-    rows_ = 0;
-    cols_ = 0;
-  }
-  *this = newMatrix;
-}
-
 void S21Matrix::SetRows(const int &rows) {
   if (rows <= 0) {
     throw std::invalid_argument(
         "the values cannot be less than or equal to zero. ERROR!");
   }
-  int tmp = rows_;
-  rows_ = rows;
+  if (rows == rows_) {
+    return;
+  }
   S21Matrix newMatrix(rows, cols_);
-  for (int i = 0; i < rows_; i++) {
+  int minRows = std::min(rows, rows_);
+  for (int i = 0; i < minRows; i++) {
     for (int j = 0; j < cols_; j++) {
-      if (i >= tmp) {
+      newMatrix(i, j) = matrix_[i][j];
+    }
+  }
+  if (rows > rows_) {
+    for (int i = rows_; i < rows; i++) {
+      for (int j = 0; j < cols_; j++) {
         newMatrix(i, j) = 0;
-      } else {
-        newMatrix(i, j) = this->matrix_[i][j];
       }
     }
   }
-  if (matrix_ != nullptr) {
-    this->RemoveMatrix_();
-    matrix_ = nullptr;
-    rows_ = 0;
-    cols_ = 0;
+  *this = newMatrix;
+}
+
+void S21Matrix::SetCols(const int &cols) {
+  if (cols <= 0) {
+    throw std::invalid_argument(
+        "the values cannot be less than or equal to zero. ERROR!");
+  }
+  if (cols == cols_) {
+    return;
+  }
+  S21Matrix newMatrix(rows_, cols);
+  int minCols = std::min(cols, cols_);
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < minCols; j++) {
+      newMatrix(i, j) = matrix_[i][j];
+    }
+  }
+  if (cols > cols_) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = cols_; j < cols; j++) {
+        newMatrix(i, j) = 0;
+      }
+    }
   }
   *this = newMatrix;
 }
@@ -346,17 +344,16 @@ bool S21Matrix::EqSizeMatrix(const S21Matrix &other) const {
 }
 
 void S21Matrix::RemoveMatrix_() {
-        if (matrix_ != nullptr) {
-            for (int i = 0; i < rows_; ++i) {
-                delete[] matrix_[i];
-            }
-            delete[] matrix_;
-            matrix_ = nullptr;
-            rows_ = 0;
-            cols_ = 0;
-        }
+  if (matrix_ != nullptr) {
+    for (int i = 0; i < rows_; ++i) {
+      delete[] matrix_[i];
     }
-
+    delete[] matrix_;
+    matrix_ = nullptr;
+    rows_ = 0;
+    cols_ = 0;
+  }
+}
 
 void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) {
   for (int i = 0; i < rows_; i++) {
