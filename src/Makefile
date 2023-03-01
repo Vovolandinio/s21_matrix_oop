@@ -13,7 +13,7 @@ ifeq ($(UNAME), Linux)
 LEAKS_CHECKING=valgrind -q --track-origins=yes --tool=memcheck --leak-check=full ./$(TEST_BINARY)
 endif
 ifeq ($(UNAME), Darwin)
-LEAKS_CHECKING=CK_FORK=no leaks --atExit -- ./s21_test
+LEAKS_CHECKING= leaks --atExit -- ./$(TEST_BINARY)
 endif
 
 ### open
@@ -103,7 +103,3 @@ fclean: clean_test clean_s21_matrix_a
 	-@rm -f *.gcno
 	-@rm -f *.info
 	-@rm -rf report
-
-### open
-open_html:
-	$(OPEN) $(GCOV_DIR)/results/index.html
