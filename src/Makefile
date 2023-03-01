@@ -8,13 +8,13 @@ ifeq ($(UNAME), Darwin)
 D_ENV=__MAC_OS__
 endif
 
-### memory leaking
-#ifeq ($(UNAME), Linux)
-#LEAKS_CHECKING=valgrind -q --track-origins=yes --tool=memcheck --leak-check=full ./$(TEST_BINARY)
-#endif
-#ifeq ($(UNAME), Darwin)
-#LEAKS_CHECKING=CK_FORK=no leaks --atExit -- ./s21_test
-#endif
+## memory leaking
+ifeq ($(UNAME), Linux)
+LEAKS_CHECKING=valgrind -q --track-origins=yes --tool=memcheck --leak-check=full ./$(TEST_BINARY)
+endif
+ifeq ($(UNAME), Darwin)
+LEAKS_CHECKING=CK_FORK=no leaks --atExit -- ./s21_test
+endif
 
 ### open
 ifeq ($(UNAME), Linux)
@@ -70,7 +70,7 @@ s21_matrix_oop.a: $(OBJ) $(HEADERS)
 
 ### test
 test: s21_matrix_oop.a
-	fsanitize=address $(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o $(TEST_BINARY) -fprofile-arcs -ftest-coverage -lgcov
+	$(CC) $(CPPFLAGS) $(SOURCES_TEST) $(CPPFLAGS_TEST) $(STAT_LIBC_NAME) -o $(TEST_BINARY) -fprofile-arcs -ftest-coverage -lgcov
 	./$(TEST_BINARY)
 	-@rm -f *.gcda
 	-@rm -f *.gcno
@@ -83,12 +83,9 @@ gcov_report: fclean test
 	genhtml -o report gcov_report.info;
 	open ./report/index.html
 
-valgrind: test
-ifeq ($(UNAME), Linux)
-	valgrind --leak-check=full ./s21_test
-else
-	CK_FORK=no leaks --atExit -- ./s21_test
-endif
+leak: test
+	$(LEAKS_CHECKING)
+
 
 check_style:
 	sh check_style.sh
