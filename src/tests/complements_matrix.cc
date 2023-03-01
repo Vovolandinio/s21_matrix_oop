@@ -2,7 +2,7 @@
 
 #include "../s21_matrix_oop.hpp"
 
-TEST(complements_matrix, complementsNormal) {
+TEST(Complements_matrix, complementsNormal) {
 S21Matrix test_matrix(3, 3);
 test_matrix(0, 0) = 1.0;
 test_matrix(0, 1) = 2.0;
@@ -32,3 +32,15 @@ S21Matrix other_matrix = test_matrix.CalcComplements();
 EXPECT_EQ(other_matrix.EqMatrix(complements_matrix), true);
 }
 
+TEST(Complements_matrix, complementsError) {
+    S21Matrix matrixOne(2,3);
+
+    matrixOne(0,0) = 0.25;
+    matrixOne(0,1) = 1.25;
+    matrixOne(0,2) = 2.25;
+    matrixOne(1,0) = 3.25;
+    matrixOne(1,1) = 4.25;
+    matrixOne(1,2) = 5.25;
+
+    EXPECT_ANY_THROW(matrixOne.CalcComplements());
+}

@@ -90,7 +90,7 @@ set_style:
 check_style:
 	sh check_style.sh
 
-clean_test:
+clean_test: clean_s21_matrix_a
 	-@rm -f $(TEST_BINARY)
 
 clean_s21_matrix_a:
