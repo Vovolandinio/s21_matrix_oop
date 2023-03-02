@@ -259,7 +259,7 @@ S21Matrix S21Matrix::Transpose() {
       }
     }
   }
-  return *this = result;
+  return result;
 }
 
 double S21Matrix::Determinant() const {
@@ -299,7 +299,7 @@ S21Matrix S21Matrix::CalcComplements() {
       result.matrix_[i][j] = ((i + j) % 2 == 0 ? 1 : -1) * temp;
     }
   }
-  return *this = result;
+  return result;
 }
 
 S21Matrix S21Matrix::InverseMatrix() {

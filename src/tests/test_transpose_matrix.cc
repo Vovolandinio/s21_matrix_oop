@@ -11,15 +11,15 @@ TEST(test_functional,transposeCorrectMatrix) {
     test_matrix(1,1) = 6;
     test_matrix(1,2) = 10;
 
-    test_matrix.Transpose();
+    S21Matrix transposeMatrix = test_matrix.Transpose();
 
-    EXPECT_EQ(test_matrix.GetRows(),3);
-    EXPECT_EQ(test_matrix.GetCols(),2);
+    EXPECT_EQ(transposeMatrix.GetRows(),3);
+    EXPECT_EQ(transposeMatrix.GetCols(),2);
 
-    EXPECT_DOUBLE_EQ(test_matrix(0,0), 3);
-    EXPECT_DOUBLE_EQ(test_matrix(0,1), 8);
-    EXPECT_DOUBLE_EQ(test_matrix(1,0), 4);
-    EXPECT_DOUBLE_EQ(test_matrix(1,1), 6);
-    EXPECT_DOUBLE_EQ(test_matrix(2,0), 3.5);
-    EXPECT_DOUBLE_EQ(test_matrix(2,1), 10);
+    EXPECT_DOUBLE_EQ(transposeMatrix(0,0), 3);
+    EXPECT_DOUBLE_EQ(transposeMatrix(0,1), 8);
+    EXPECT_DOUBLE_EQ(transposeMatrix(1,0), 4);
+    EXPECT_DOUBLE_EQ(transposeMatrix(1,1), 6);
+    EXPECT_DOUBLE_EQ(transposeMatrix(2,0), 3.5);
+    EXPECT_DOUBLE_EQ(transposeMatrix(2,1), 10);
 }
