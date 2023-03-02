@@ -1,7 +1,6 @@
 #include "s21_matrix_oop.hpp"
 
-S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {
-}
+S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {}
 
 S21Matrix::S21Matrix(int rows, int cols) {
   this->rows_ = rows;
@@ -27,14 +26,14 @@ S21Matrix::S21Matrix(S21Matrix &&other) noexcept {
   std::swap(cols_, other.cols_);
   other.rows_ = 0;
   other.cols_ = 0;
-  other.matrix_ = new double *[0];
+  other.matrix_ = nullptr;
 }
 
 S21Matrix::~S21Matrix() { RemoveMatrix_(); }
 
-int S21Matrix::GetCols() const { return cols_; }
+int S21Matrix::GetCols() const noexcept { return cols_; }
 
-int S21Matrix::GetRows() const { return rows_; }
+int S21Matrix::GetRows() const noexcept { return rows_; }
 
 void S21Matrix::SetRows(const int &rows) {
   if (rows <= 0) {
@@ -90,25 +89,25 @@ void S21Matrix::SetCols(const int &cols) {
  * overload
  */
 
-S21Matrix S21Matrix::operator+(const S21Matrix &other) {
+S21Matrix S21Matrix::operator+(const S21Matrix &other) const {
   S21Matrix result(*this);
   result.SumMatrix(other);
   return result;
 }
 
-S21Matrix S21Matrix::operator-(const S21Matrix &other) {
+S21Matrix S21Matrix::operator-(const S21Matrix &other) const {
   S21Matrix result(*this);
   result.SubMatrix(other);
   return result;
 }
 
-S21Matrix S21Matrix::operator*(const S21Matrix &other) {
+S21Matrix S21Matrix::operator*(const S21Matrix &other) const {
   S21Matrix result(*this);
   result.MulMatrix(other);
   return result;
 }
 
-S21Matrix S21Matrix::operator*(const double &number) {
+S21Matrix S21Matrix::operator*(const double &number) const {
   S21Matrix result(*this);
   result.MulNumber(number);
   return result;
@@ -134,7 +133,7 @@ S21Matrix &S21Matrix::operator*=(const double &number) {
   return *this;
 }
 
-bool S21Matrix::operator==(const S21Matrix &other) { return EqMatrix(other); }
+bool S21Matrix::operator==(const S21Matrix &other) const noexcept { return EqMatrix(other); }
 
 S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
   if (this == &other) {
@@ -169,7 +168,7 @@ double &S21Matrix::operator()(int row, int col) {
  * public
  */
 
-bool S21Matrix::EqMatrix(const S21Matrix &other) {
+bool S21Matrix::EqMatrix(const S21Matrix &other) const {
   bool result = true;
   if (this->rows_ != other.rows_ && this->cols_ != other.cols_) {
     result = false;
@@ -186,24 +185,32 @@ bool S21Matrix::EqMatrix(const S21Matrix &other) {
 }
 
 void S21Matrix::SumMatrix(const S21Matrix &other) {
-  if (!EqSizeMatrix(other)) {
-    throw std::invalid_argument("different matrix dimensions");
-  }
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < cols_; j++) {
-      matrix_[i][j] += other.matrix_[i][j];
+  if (this->matrix_ != nullptr) {
+    if (!EqSizeMatrix(other)) {
+      throw std::invalid_argument("different matrix dimensions");
     }
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < cols_; j++) {
+        matrix_[i][j] += other.matrix_[i][j];
+      }
+    }
+  } else {
+    throw std::invalid_argument("The values cannot be null. ERROR!");
   }
 }
 
 void S21Matrix::SubMatrix(const S21Matrix &other) {
-  if (!EqSizeMatrix(other)) {
-    throw std::invalid_argument("different matrix dimensions");
-  }
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < cols_; j++) {
-      matrix_[i][j] -= other.matrix_[i][j];
+  if (this->matrix_ != nullptr) {
+    if (!EqSizeMatrix(other)) {
+      throw std::invalid_argument("different matrix dimensions");
     }
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < cols_; j++) {
+        matrix_[i][j] -= other.matrix_[i][j];
+      }
+    }
+  } else {
+    throw std::invalid_argument("The values cannot be null. ERROR!");
   }
 }
 
@@ -220,23 +227,28 @@ void S21Matrix::MulNumber(const double num) {
 }
 
 void S21Matrix::MulMatrix(const S21Matrix &other) {
-  if (this->cols_ != other.rows_) {
-    throw std::invalid_argument(
-        "the number of columns of the first matrix is not equal to the number "
-        "of rows of the second matrix. ERROR!");
-  } else {
-    S21Matrix result(this->rows_, other.cols_);
-    for (int m = 0; m < this->rows_; m++) {
-      for (int n = 0; n < other.cols_; n++) {
-        result.matrix_[m][n] = 0;
-        for (int k = 0; k < this->cols_; k++) {
-          result.matrix_[m][n] += matrix_[m][k] * other.matrix_[k][n];
+    if (this->matrix_ != nullptr) {
+        if (this->cols_ != other.rows_) {
+            throw std::invalid_argument(
+                    "the number of columns of the first matrix is not equal to the number "
+                    "of rows of the second matrix. ERROR!");
+        } else {
+            S21Matrix result(this->rows_, other.cols_);
+            for (int m = 0; m < this->rows_; m++) {
+                for (int n = 0; n < other.cols_; n++) {
+                    result.matrix_[m][n] = 0;
+                    for (int k = 0; k < this->cols_; k++) {
+                        result.matrix_[m][n] += matrix_[m][k] * other.matrix_[k][n];
+                    }
+                }
+            }
+            *this = result;
         }
-      }
+    } else {
+        throw std::invalid_argument("The values cannot be null. ERROR!");
     }
-    *this = result;
-  }
 }
+
 
 S21Matrix S21Matrix::Transpose() {
   S21Matrix result(cols_, rows_);
@@ -250,7 +262,7 @@ S21Matrix S21Matrix::Transpose() {
   return *this = result;
 }
 
-double S21Matrix::Determinant() {
+double S21Matrix::Determinant() const {
   double determinant = 0.0;
   if (rows_ == 1) {
     determinant = this->matrix_[0][0];
@@ -326,7 +338,7 @@ void S21Matrix::CreateMatrix_() {
   }
 }
 
-bool S21Matrix::EqSizeMatrix(const S21Matrix &other) const {
+bool S21Matrix::EqSizeMatrix(const S21Matrix &other) const noexcept {
   if (this->rows_ == other.rows_ && this->cols_ == other.cols_) {
     return true;
   } else {
@@ -346,7 +358,7 @@ void S21Matrix::RemoveMatrix_() {
   }
 }
 
-void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) {
+void S21Matrix::CropMatrix_(int del_row, int del_col, S21Matrix &other) const {
   for (int i = 0; i < rows_; i++) {
     if (i == del_row) continue;
     for (int j = 0; j < cols_; j++) {
