@@ -10,15 +10,15 @@ TEST(constructor, customConstructor) {
 
 TEST(constructor, defaultConstructor) {
     S21Matrix test_matrix;
-    EXPECT_EQ(5, test_matrix.GetRows());
-    EXPECT_EQ(5, test_matrix.GetCols());
+    EXPECT_EQ(0, test_matrix.GetRows());
+    EXPECT_EQ(0, test_matrix.GetCols());
 }
 
 TEST(constructor, setGreaterRowDefault) {
     S21Matrix test_matrix;
     test_matrix.SetRows(15);
     EXPECT_EQ(15, test_matrix.GetRows());
-    EXPECT_EQ(5, test_matrix.GetCols());
+    EXPECT_EQ(0, test_matrix.GetCols());
 }
 
 TEST(constructor, setLessRow) {

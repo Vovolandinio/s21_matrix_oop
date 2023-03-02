@@ -311,7 +311,7 @@ S21Matrix S21Matrix::InverseMatrix() {
  */
 
 void S21Matrix::CreateMatrix_() {
-  if (rows_ <= 0 || cols_ <= 0) {
+  if (rows_ < 0 || cols_ < 0) {
     throw std::invalid_argument(
         "the values cannot be less than or equal to zero. ERROR!");
   }
