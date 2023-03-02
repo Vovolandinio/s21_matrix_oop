@@ -1,10 +1,6 @@
 #include "s21_matrix_oop.hpp"
 
-S21Matrix::S21Matrix() {
-  this->cols_ = 5;
-  this->rows_ = 5;
-  this->matrix_ = nullptr;
-  CreateMatrix_();
+S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {
 }
 
 S21Matrix::S21Matrix(int rows, int cols) {
