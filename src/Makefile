@@ -37,7 +37,7 @@ STAT_LIBC_BUILD=ar rcs
 
 ### s21_matrix_oop.a
 STAT_LIBC_NAME=s21_matrix_oop.a
-CPPFLAGS=-Wall -Wextra -Werror -g -D $(D_ENV)
+CPPFLAGS= -g -Wall -Werror -Wextra -std=c++17
 HEADER=s21_matrix_oop.hpp
 SOURCES=s21_matrix_oop.cc
 OBJ=$(notdir $(SOURCES:.cc=.o))
