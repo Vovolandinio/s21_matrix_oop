@@ -133,7 +133,9 @@ S21Matrix &S21Matrix::operator*=(const double &number) {
   return *this;
 }
 
-bool S21Matrix::operator==(const S21Matrix &other) const noexcept { return EqMatrix(other); }
+bool S21Matrix::operator==(const S21Matrix &other) const noexcept {
+  return EqMatrix(other);
+}
 
 S21Matrix &S21Matrix::operator=(const S21Matrix &other) {
   if (this == &other) {
@@ -227,28 +229,28 @@ void S21Matrix::MulNumber(const double num) {
 }
 
 void S21Matrix::MulMatrix(const S21Matrix &other) {
-    if (this->matrix_ != nullptr) {
-        if (this->cols_ != other.rows_) {
-            throw std::invalid_argument(
-                    "the number of columns of the first matrix is not equal to the number "
-                    "of rows of the second matrix. ERROR!");
-        } else {
-            S21Matrix result(this->rows_, other.cols_);
-            for (int m = 0; m < this->rows_; m++) {
-                for (int n = 0; n < other.cols_; n++) {
-                    result.matrix_[m][n] = 0;
-                    for (int k = 0; k < this->cols_; k++) {
-                        result.matrix_[m][n] += matrix_[m][k] * other.matrix_[k][n];
-                    }
-                }
-            }
-            *this = result;
-        }
+  if (this->matrix_ != nullptr) {
+    if (this->cols_ != other.rows_) {
+      throw std::invalid_argument(
+          "the number of columns of the first matrix is not equal to the "
+          "number "
+          "of rows of the second matrix. ERROR!");
     } else {
-        throw std::invalid_argument("The values cannot be null. ERROR!");
+      S21Matrix result(this->rows_, other.cols_);
+      for (int m = 0; m < this->rows_; m++) {
+        for (int n = 0; n < other.cols_; n++) {
+          result.matrix_[m][n] = 0;
+          for (int k = 0; k < this->cols_; k++) {
+            result.matrix_[m][n] += matrix_[m][k] * other.matrix_[k][n];
+          }
+        }
+      }
+      *this = result;
     }
+  } else {
+    throw std::invalid_argument("The values cannot be null. ERROR!");
+  }
 }
-
 
 S21Matrix S21Matrix::Transpose() {
   S21Matrix result(cols_, rows_);
