@@ -172,7 +172,7 @@ double &S21Matrix::operator()(int row, int col) {
 
 bool S21Matrix::EqMatrix(const S21Matrix &other) const {
   bool result = true;
-  if (this->rows_ != other.rows_ && this->cols_ != other.cols_) {
+  if (this->rows_ != other.rows_ || this->cols_ != other.cols_) {
     result = false;
   } else {
     for (int i = 0; i < this->rows_; i++) {
